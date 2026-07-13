@@ -1,17 +1,24 @@
 from backend.database.database import (
     create_tables,
-    save_conversation
+    save_conversation,
+    get_all_conversations
 )
 
 # Create the table
 create_tables()
 
-# Save one sample conversation
+# Save a sample conversation
 save_conversation(
-    user_message="I failed my exam.",
-    emotion="Sad",
-    recommendation_title="Breathing Exercise",
-    ai_response="I'm sorry to hear that. Take a deep breath and be kind to yourself."
+    user_message="I got selected in my interview!",
+    emotion="Excited",
+    recommendation_title="Achievement Journal",
+    ai_response="Congratulations! You should celebrate your success."
 )
 
-print("Conversation saved successfully!")
+# Retrieve all conversations
+conversations = get_all_conversations()
+
+print("\nStored Conversations:\n")
+
+for conversation in conversations:
+    print(conversation)

@@ -73,6 +73,25 @@ def save_conversation(
         ai_response
     ))
 
+def get_all_conversations():
+    """
+    Retrieves all conversations from the database.
+    """
+
+    connection = get_connection()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT * FROM conversations
+    """)
+
+    conversations = cursor.fetchall()
+
+    connection.close()
+
+    return conversations
+
     connection.commit()
 
     connection.close()
