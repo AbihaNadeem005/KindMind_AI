@@ -96,3 +96,28 @@ def get_all_conversations():
     connection.close()
 
     return conversations
+
+def get_recent_conversations(limit=5):
+    """
+    Returns the most recent conversations.
+    """
+
+    connection = get_connection()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT
+            user_message,
+            emotion,
+            ai_response
+        FROM conversations
+        ORDER BY id DESC
+        LIMIT ?
+    """, (limit,))
+
+    conversations = cursor.fetchall()
+
+    connection.close()
+
+    return conversations
