@@ -1,14 +1,14 @@
 import sqlite3
+import os
 
 DATABASE_NAME = "kindmind.db"
 
 
 def get_connection():
-    """
-    Creates and returns a connection
-    to the SQLite database.
-    """
+    print("Database path:", os.path.abspath(DATABASE_NAME))
+
     connection = sqlite3.connect(DATABASE_NAME)
+
     return connection
 
 def create_tables():
@@ -73,6 +73,11 @@ def save_conversation(
         ai_response
     ))
 
+    
+    connection.commit()
+
+    connection.close()
+
 def get_all_conversations():
     """
     Retrieves all conversations from the database.
@@ -91,7 +96,3 @@ def get_all_conversations():
     connection.close()
 
     return conversations
-
-    connection.commit()
-
-    connection.close()
