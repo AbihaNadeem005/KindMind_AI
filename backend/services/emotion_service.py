@@ -1,48 +1,50 @@
-import os
-from dotenv import load_dotenv
-from google import genai
-
-load_dotenv()
-
-# Create Gemini client
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-
-
 def detect_emotion(user_message: str) -> str:
     """
-    Detects the user's emotion using Gemini.
-    Returns only one emotion.
+    Detects the user's emotion using simple keyword matching.
     """
 
-    prompt = f"""
-Analyze the following user message.
+    message = user_message.lower()
 
-Return ONLY one emotion from this list:
+    # Happy
+    if any(word in message for word in [
+        "happy", "glad", "joy", "wonderful", "great",
+        "awesome", "smile"
+    ]):
+        return "Happy"
 
-Happy
-Sad
-Angry
-Anxious
-Stressed
-Neutral
-Excited
+    # Excited
+    elif any(word in message for word in [
+        "excited", "amazing", "finally", "yay",
+        "can't wait", "thrilled", "project is working"
+    ]):
+        return "Excited"
 
-User Message:
-"{user_message}"
+    # Sad
+    elif any(word in message for word in [
+        "sad", "cry", "depressed", "failed",
+        "upset", "heartbroken", "unhappy"
+    ]):
+        return "Sad"
 
-Return only the emotion name.
-"""
+    # Angry
+    elif any(word in message for word in [
+        "angry", "mad", "furious",
+        "annoyed", "hate"
+    ]):
+        return "Angry"
 
-    try:
-        response = client.models.generate_content(
-            model="gemini-flash-latest",
-            contents=prompt
-        )
+    # Anxious
+    elif any(word in message for word in [
+        "anxious", "nervous", "interview",
+        "presentation", "worried", "panic"
+    ]):
+        return "Anxious"
 
-        return response.text.strip()
+    # Stressed
+    elif any(word in message for word in [
+        "stressed", "stress", "pressure",
+        "overwhelmed", "busy", "deadline"
+    ]):
+        return "Stressed"
 
-    except Exception as e:
-        print(f"Emotion Detection Error: {e}")
-
-        # Fallback emotion if Gemini is unavailable
-        return "Neutral"
+    return "Neutral"
