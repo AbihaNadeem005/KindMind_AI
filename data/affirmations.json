@@ -1,0 +1,62 @@
+[
+  {
+    "category": "confidence",
+    "text": "I believe in my abilities and trust myself."
+  },
+  {
+    "category": "confidence",
+    "text": "I am capable of overcoming every challenge."
+  },
+  {
+    "category": "anxiety",
+    "text": "I am safe, calm, and in control."
+  },
+  {
+    "category": "anxiety",
+    "text": "One breath at a time, I find peace."
+  },
+  {
+    "category": "stress",
+    "text": "I choose progress over perfection."
+  },
+  {
+    "category": "stress",
+    "text": "I give myself permission to rest."
+  },
+  {
+    "category": "motivation",
+    "text": "Every day I become a better version of myself."
+  },
+  {
+    "category": "motivation",
+    "text": "Small steps lead to great achievements."
+  },
+  {
+    "category": "happiness",
+    "text": "I deserve happiness and joy."
+  },
+  {
+    "category": "happiness",
+    "text": "Today is a beautiful opportunity to grow."
+  },
+  {
+    "category": "gratitude",
+    "text": "I am thankful for everything I have learned."
+  },
+  {
+    "category": "gratitude",
+    "text": "Every moment gives me something to appreciate."
+  },
+  {
+    "category": "focus",
+    "text": "I choose to focus on what truly matters."
+  },
+  {
+    "category": "peace",
+    "text": "I release worries that I cannot control."
+  },
+  {
+    "category": "growth",
+    "text": "Every experience helps me become stronger."
+  }
+]

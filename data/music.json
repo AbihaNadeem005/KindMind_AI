@@ -1,0 +1,38 @@
+[
+  {
+    "emotion": "Stressed",
+    "genre": "Nature Sounds",
+    "suggestion": "Rainfall Ambience",
+    "duration": "10 minutes"
+  },
+  {
+    "emotion": "Anxious",
+    "genre": "Piano",
+    "suggestion": "Soft Piano Relaxation",
+    "duration": "15 minutes"
+  },
+  {
+    "emotion": "Sad",
+    "genre": "Acoustic",
+    "suggestion": "Gentle Acoustic Instrumentals",
+    "duration": "20 minutes"
+  },
+  {
+    "emotion": "Happy",
+    "genre": "Upbeat",
+    "suggestion": "Feel Good Playlist",
+    "duration": "30 minutes"
+  },
+  {
+    "emotion": "Excited",
+    "genre": "Energetic",
+    "suggestion": "Positive Vibes Mix",
+    "duration": "20 minutes"
+  },
+  {
+    "emotion": "Neutral",
+    "genre": "Lo-fi",
+    "suggestion": "Lo-fi Study Beats",
+    "duration": "30 minutes"
+  }
+]

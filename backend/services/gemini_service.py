@@ -1,29 +1,39 @@
 import os
+import time
+
 from dotenv import load_dotenv
 from google import genai
 
 from backend.database.database import get_recent_conversations
-
+from backend.services.knowledge_service import (
+    get_quote,
+    get_affirmation,
+    get_story,
+    get_breathing_exercise,
+    get_music
+)
 load_dotenv()
+
 api_key = os.getenv("GEMINI_API_KEY")
 
 client = genai.Client(api_key=api_key)
+
 
 def get_gemini_response(
     user_message: str,
     emotion: str,
     recommendation: dict,
-    comfort_plan: list
+    comfort_plan: list,
+    home_wellness: dict
 ) -> str:
     """
     Generates an empathetic response using Gemini
     while considering previous conversations.
     """
 
-    # Retrieve the latest conversations
+    # Retrieve previous conversations
     recent_memories = get_recent_conversations(3)
 
-    # Build memory context
     if recent_memories:
 
         memory_text = ""
@@ -52,12 +62,21 @@ Assistant:
 
         memory_text = "No previous conversations."
 
-    # Debugging
+    # Debug
     print("\n========== MEMORY ==========")
     print(memory_text)
     print("============================\n")
 
-    # Prompt
+    quote = get_quote(emotion)
+
+    affirmation = get_affirmation(emotion)
+
+    story = get_story()
+
+    breathing = get_breathing_exercise()
+
+    music = get_music(emotion)
+
     prompt = f"""
 You are KindMind AI.
 
@@ -81,6 +100,26 @@ Instead, respond naturally like a caring friend.
 PREVIOUS CONVERSATIONS
 
 {memory_text}
+
+------------------------------------------------
+------------------------------------------------
+
+KNOWLEDGE
+
+Motivational Quote:
+{quote}
+
+Affirmation:
+{affirmation}
+
+Breathing Exercise:
+{breathing['title']}
+
+Music Suggestion:
+{music['suggestion']}
+
+Story:
+{story['story']}
 
 ------------------------------------------------
 
@@ -109,6 +148,22 @@ COMFORT PLAN
 
 ------------------------------------------------
 
+HOME WELLNESS MODE
+
+Lighting:
+{home_wellness['lighting']}
+
+Sound:
+{home_wellness['sound']}
+
+Environment:
+{home_wellness['environment']}
+
+Device:
+{home_wellness['device']}
+
+------------------------------------------------
+
 CURRENT USER MESSAGE
 
 {user_message}
@@ -128,22 +183,52 @@ Instructions
 - End with a gentle question or encouraging sentence whenever appropriate.
 - If appropriate, naturally include one or two steps from the comfort plan.
 - Do not list the entire comfort plan unless it genuinely helps the user.
+- If appropriate, naturally suggest one or two home wellness ideas.
+- Do not list every suggestion unless it genuinely helps.
+- Blend the suggestions naturally into the conversation.
+- When appropriate, naturally include the motivational quote.
+- When appropriate, naturally include the affirmation.
+- If the user asks to relax, use the breathing exercise.
+- If the user asks for a story, use the provided story.
+- If music would help, suggest the provided music recommendation.
+- Do not force all of these into every response. Use only what fits the conversation naturally.
 """
 
-    try:
+    # Retry Gemini up to 3 times if the server is busy
+    for attempt in range(3):
 
-        response = client.models.generate_content(
-            model="gemini-flash-latest",
-            contents=prompt
-        )
+        try:
 
-        return response.text
+            response = client.models.generate_content(
+                model="gemini-flash-latest",
+                contents=prompt
+            )
 
-    except Exception as e:
+            return response.text
 
-        print(f"Gemini Error: {e}")
+        except Exception as e:
 
-        return (
-            "I'm sorry, I'm having trouble connecting to the AI service right now. "
-            "Please try again in a few moments."
-        )
+            error_message = str(e)
+
+            # Retry only for temporary server overload
+            if "503" in error_message or "UNAVAILABLE" in error_message:
+
+                print(f"Gemini busy... Retrying ({attempt + 1}/3)")
+
+                time.sleep(2)
+
+                continue
+
+            # Any other error
+            print(f"Gemini Error: {e}")
+
+            return (
+                "I'm sorry, I'm having trouble connecting to the AI service right now. "
+                "Please try again in a few moments."
+            )
+
+    # If all retries fail
+    return (
+        "The AI service is currently experiencing high demand. "
+        "Please try again in a few moments."
+    )

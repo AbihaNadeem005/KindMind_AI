@@ -5,6 +5,7 @@ from backend.services.emotion_service import detect_emotion
 from backend.services.recommendation_service import get_recommendation
 from backend.database.database import save_conversation
 from backend.services.comfort_plan_service import get_comfort_plan
+from backend.services.home_wellness_service import get_home_wellness_mode
 app = FastAPI(
     title="KindMind AI API",
     description="Backend API for KindMind AI",
@@ -26,11 +27,14 @@ def chat(request: ChatRequest):
 
     comfort_plan = get_comfort_plan(emotion)
 
+    home_wellness = get_home_wellness_mode(emotion)
+
     response = get_gemini_response(
         request.message,
         emotion,
         recommendation,
-        comfort_plan
+        comfort_plan,
+    home_wellness
     )
 
     save_conversation(
@@ -44,6 +48,7 @@ def chat(request: ChatRequest):
     "emotion": emotion,
     "recommendation": recommendation,
     "comfort_plan": comfort_plan,
+    "home_wellness": home_wellness,
     "response": response
     }
 

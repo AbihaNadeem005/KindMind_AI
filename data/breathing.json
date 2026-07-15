@@ -1,0 +1,45 @@
+[
+  {
+    "title": "Box Breathing",
+    "duration": "2-5 minutes",
+    "steps": [
+      "Inhale through your nose for 4 seconds.",
+      "Hold your breath for 4 seconds.",
+      "Exhale slowly through your mouth for 4 seconds.",
+      "Hold for another 4 seconds.",
+      "Repeat 5 times."
+    ]
+  },
+  {
+    "title": "4-7-8 Breathing",
+    "duration": "3 minutes",
+    "steps": [
+      "Inhale for 4 seconds.",
+      "Hold for 7 seconds.",
+      "Exhale slowly for 8 seconds.",
+      "Repeat 4 times."
+    ]
+  },
+  {
+    "title": "Deep Belly Breathing",
+    "duration": "5 minutes",
+    "steps": [
+      "Place one hand on your chest and one on your stomach.",
+      "Take slow deep breaths.",
+      "Let your stomach rise with each inhale.",
+      "Exhale gently.",
+      "Continue for 5 minutes."
+    ]
+  },
+  {
+    "title": "5-4-3-2-1 Grounding",
+    "duration": "5 minutes",
+    "steps": [
+      "Notice 5 things you can see.",
+      "Notice 4 things you can touch.",
+      "Notice 3 things you can hear.",
+      "Notice 2 things you can smell.",
+      "Notice 1 thing you can taste."
+    ]
+  }
+]
